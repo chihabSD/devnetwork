@@ -1,2 +1,4 @@
 # devnetwork
-Devnetwork
+Social network for developers
+
+
