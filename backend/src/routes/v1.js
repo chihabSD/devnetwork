@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const authenticate = require("../middlewares/auth");
-const userController = require("../controllers/user.controller");
+const authController = require("../controllers/auth.controller");
 
 //Auth and signup
 router.post(
@@ -18,7 +18,7 @@ router.post(
       "please enter a password with 5 or more characters"
     ).isLength({ min: 5 })
   ],
-  userController.register
+  authController.register
 );
 router.post(
   "/login",
@@ -29,12 +29,12 @@ router.post(
     // password must be at least 5 chars long
     check("password", "Password is required").exists()
   ],
-  userController.login
+  authController.login
 );
 //router.post("/login", userController.login);
 
 //router.post("/profile", userController.profile);
 
 //Middle ware
-router.get("/profile", authenticate, userController.profile);
+router.get("/profile", authenticate, authController.profile);
 module.exports = router;

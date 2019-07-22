@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 
-const userController = {};
+const authController = {};
 
 //register
-userController.register = async (req, res) => {
+authController.register = async (req, res) => {
   const { name, email, password } = req.body; //get requests
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -71,7 +71,7 @@ userController.register = async (req, res) => {
 };
 
 //login
-userController.login = async (req, res) => {
+authController.login = async (req, res) => {
   const { email, password } = req.body; //get requests
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -129,7 +129,7 @@ userController.login = async (req, res) => {
  * @description get the user profile
  * @access  public
  */
-userController.profile = async (req, res) => {
+authController.profile = async (req, res) => {
   try {
     /**
      * since its a protect route and we use the token which has the id,
@@ -145,4 +145,4 @@ userController.profile = async (req, res) => {
   }
 };
 
-module.exports = userController;
+module.exports = authController;
