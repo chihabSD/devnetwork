@@ -69,6 +69,66 @@ userController.register = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+//login
+userController.login = async (req, res) => {
+  const { email, password } = req.body; //get requests
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  console.log(req.body);
+  try {
+    let user = await User.findOne({ email });
+    // check if there is a user, and if there not a user, send back error
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    /**
+     * We have made a request to DB to get the user
+     * we use bcrupt.compare to compare the password that we have entered
+     * with the password that is in the DB
+     *
+     */
+    const isMatch = await bcrypt.compare(password, user.password);
+    // if there is not match
+    if (!isMatch) {
+      return res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
+    }
+    //create the payload
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+    /**
+     * we a sign the payload .ie (user.id)
+     * and the secret key from default.json using config.get
+     * then we set the expiration date
+     * and then a callback that take a possible error and the token itself
+     */
+    jwt.sign(
+      payload,
+      config.get("jwtSecret"),
+      { expiresIn: 36000 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token }); //send the token back to the client
+      }
+    );
+    // res.send("User have registered successfully");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+/**
+ * @route   GET api/profile
+ * @description get the user profile
+ * @access  public
+ */
 userController.profile = async (req, res) => {
   try {
     /**

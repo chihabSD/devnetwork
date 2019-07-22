@@ -11,7 +11,7 @@ router.post(
     check("name", "Please enter your name")
       .not()
       .isEmpty(),
-    check(" ", "Please include a valide email").isEmail(),
+    check("email", "Please include a valide email").isEmail(),
     // password must be at least 5 chars long
     check(
       "password",
@@ -19,6 +19,17 @@ router.post(
     ).isLength({ min: 5 })
   ],
   userController.register
+);
+router.post(
+  "/login",
+  [
+    check("email", "Email is required")
+      .not()
+      .isEmpty(),
+    // password must be at least 5 chars long
+    check("password", "Password is required").exists()
+  ],
+  userController.login
 );
 //router.post("/login", userController.login);
 
