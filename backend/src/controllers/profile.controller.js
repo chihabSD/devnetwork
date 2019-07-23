@@ -8,7 +8,7 @@ const config = require("config");
 const { check, validationResult } = require("express-validator");
 
 const profileController = {};
-
+const serverError = "Server error";
 //get the profile
 
 /**
@@ -39,7 +39,7 @@ profileController.me = async (req, res) => {
     res.json(profile);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send(serverError);
   }
 };
 
@@ -118,7 +118,7 @@ profileController.createprofile = async (req, res) => {
       res.json(profile);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error");
+      res.status(500).send(serverError);
     }
   }
 };
@@ -134,7 +134,7 @@ profileController.getallProfiles = async (req, res) => {
     res.json(profiles);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send({ msg: "Server side error" });
+    res.status(500).send(serverError);
   }
 };
 
@@ -187,7 +187,8 @@ profileController.deleteProfile = async (req, res) => {
     res.json({ msg: "User removed" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send(serverError);
   }
 };
+
 module.exports = profileController;

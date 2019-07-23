@@ -14,7 +14,6 @@ authController.register = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
   console.log(req.body);
   try {
     let user = await User.findOne({ email });
@@ -69,7 +68,6 @@ authController.register = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
-
 //login
 authController.login = async (req, res) => {
   const { email, password } = req.body; //get requests
@@ -153,7 +151,7 @@ authController.profile = async (req, res) => {
  * @access  private
  */
 authController.updatePassword = async (req, res) => {
-  const {password} = req.body;
+  const { password } = req.body;
   // enter the current password
   // if current password matches the one you have entered
   // then update the password
@@ -168,7 +166,7 @@ authController.forgotPassword = async (req, res) => {
   console.log(req.body);
   //step 2: check if email does exist
   // step 3: if email exist
-  //return 
+  //return
   res.send({
     msg: "Forgot password?"
   });
