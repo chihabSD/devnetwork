@@ -6,7 +6,7 @@ Social network for developers
 
 Node, Express, JWT , mongoDB and others.
 
-# How to install:
+
 
 Step 1: clone the rep
 git clone https://github.com/chihabSD/devnetwork.git
