@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -101,7 +101,10 @@ const profileSchema = new Schema({
     facebook: {
       type: String
     },
-    instgram: {
+    instagram: {
+      type: String
+    },
+    linkedin: {
       type: String
     }
   },
@@ -111,4 +114,4 @@ const profileSchema = new Schema({
   }
 });
 
-module.exports = profileSchema = mongoose.model("Profile", profileSchema);
+module.exports = Profile = mongoose.model("Profile", profileSchema);

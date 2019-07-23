@@ -30,6 +30,7 @@
     "mem": "^5.1.1",
     "mongoose": "^5.6.5",
     "morgan": "^1.9.1",
+    "nodemailer": "^6.3.0",
     "nodemon": "^1.19.1",
     "request": "^2.88.0"
   },

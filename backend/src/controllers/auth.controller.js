@@ -125,6 +125,7 @@ authController.login = async (req, res) => {
 };
 
 /**
+ * GET ALL PROFILES
  * @route   GET api/profile
  * @description get the user profile
  * @access  public
@@ -145,4 +146,31 @@ authController.profile = async (req, res) => {
   }
 };
 
+/**
+ * UPDATE PASSWORD
+ * @route   GET api/profile/updatepassword
+ * @description update password
+ * @access  private
+ */
+authController.updatePassword = async (req, res) => {
+  const {password} = req.body;
+  // enter the current password
+  // if current password matches the one you have entered
+  // then update the password
+  res.send({
+    msg: "update password"
+  });
+};
+
+authController.forgotPassword = async (req, res) => {
+  //step 1: Get the user email form the req.body
+  const { email } = req.body;
+  console.log(req.body);
+  //step 2: check if email does exist
+  // step 3: if email exist
+  //return 
+  res.send({
+    msg: "Forgot password?"
+  });
+};
 module.exports = authController;

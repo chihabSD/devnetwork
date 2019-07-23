@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const authenticate = require("../middlewares/auth");
+
+/***************** controllers ************/
 const authController = require("../controllers/auth.controller");
+const profileController = require("../controllers/profile.controller");
 
 //Auth and signup
 router.post(
@@ -31,10 +34,31 @@ router.post(
   ],
   authController.login
 );
-//router.post("/login", userController.login);
+router.post("/forgot_password", authController.forgotPassword);
 
 //router.post("/profile", userController.profile);
 
 //Middle ware
-router.get("/profile", authenticate, authController.profile);
+//router.get("/profile", authenticate, authController.profile);
+router.post(
+  "/profile/updatepassword",
+  authenticate,
+  authController.updatePassword
+);
+/*******************   Profile   *******************************/
+router.get("/profile/me", authenticate, profileController.me);
+router.post(
+  "/profile/create",
+  [
+    check("status", "Status is required")
+      .not()
+      .isEmpty(),
+    check("skills", "Skills are required")
+      .not()
+      .isEmpty()
+  ],
+  authenticate,
+  profileController.createprofile
+);
+
 module.exports = router;
