@@ -13,5 +13,18 @@ exports.validate = method => {
           .isEmpty()
       ];
     }
+    case "addExperience": {
+      return [
+        check("title", "title is required")
+          .not()
+          .isEmpty(),
+        check("company", "company are required")
+          .not()
+          .isEmpty(),
+        check("from", "from date are required")
+          .not()
+          .isEmpty()
+      ];
+    }
   }
 };

@@ -190,5 +190,42 @@ profileController.deleteProfile = async (req, res) => {
     res.status(500).send(serverError);
   }
 };
+/**
+ * @route   PUT api/profile/experience
+ * @description Add profile experience
+ * @access  private
+ */
+profileController.addExperience = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  //get body data
+  const { title, company, location, from, to, current, description } = req.body;
+
+  //add new object
+  const newExp = {
+    title,
+    company,
+    location,
+    from,
+    to,
+    current,
+    description
+  };
+  try {
+    // find a profile that matches the user id and stor it in profile var
+    const profile = await Profile.findOne({ user: req.user.id });
+    //go to experience in Profile model and push the new object to the begnining of the array
+    profile.experience.unshift(newExp);
+    //the save the profile
+    await profile.save();
+
+    res.json(profile); //return the profile
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(serverError);
+  }
+};
 
 module.exports = profileController;
