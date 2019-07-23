@@ -123,4 +123,47 @@ profileController.createprofile = async (req, res) => {
   }
 };
 
+/**
+ * @route   GET api/profile
+ * @description get all profiles
+ * @access  public
+ */
+profileController.getallProfiles = async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ msg: "Server side error" });
+  }
+};
+
+/**
+ * @route   GET api/profile/:user_id
+ * @description get profile by id
+ * @access  public
+ */
+profileController.getprofileByID = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id
+    }).populate("user", ["name", "avatar"]);
+    //check if there is a profile or the user requested
+    if (!profile)
+      return res.status(400).json({
+        msg: `No such profile found`
+      });
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    //check for certain type of message
+    if (err.kind == "ObjectId") {
+      //take err object and check if property kind  === objectId
+      return res.status(400).json({
+        msg: `No such profile found`
+      });
+    }
+    res.status(500).send({ msg: "Server side error" });
+  }
+};
 module.exports = profileController;

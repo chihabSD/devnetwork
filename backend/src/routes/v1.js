@@ -39,7 +39,7 @@ router.post("/forgot_password", authController.forgotPassword);
 //router.post("/profile", userController.profile);
 
 //Middle ware
-//router.get("/profile", authenticate, authController.profile);
+
 router.post(
   "/profile/updatepassword",
   authenticate,
@@ -60,5 +60,7 @@ router.post(
   authenticate,
   profileController.createprofile
 );
+router.get("/profile", profileController.getallProfiles);
+router.get("/profile/user/:user_id", profileController.getprofileByID);
 
 module.exports = router;
