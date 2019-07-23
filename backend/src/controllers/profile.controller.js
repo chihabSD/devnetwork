@@ -228,4 +228,39 @@ profileController.addExperience = async (req, res) => {
   }
 };
 
+/**
+ * @route   PUT api/profile/experience
+ * @description Add profile experience
+ * @access  private
+ */
+profileController.updateExperience = async (req, res) => {};
+
+/**
+ * @route   DELETE api/profile/experience
+ * @description delete profile experience
+ * @access  private
+ */
+profileController.deleteExperience = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    //get the correct experience to remove
+    /**
+     * Go to Profile model => experience then map through it and return item.id
+     * then chain into it, indexOf and match it to req.params.exp_id
+     */
+    const removeIndex = profile.experience
+      .map(item => item.id)
+      .indexOf(req.params.exp_id);
+
+    //take the profile that we have and splice(take something out)
+    profile.experience.splice(removeIndex, 1); //take one
+    await profile.save(); //save profile
+    res.json(profile); //send back the profile
+  } catch (err) {
+    console.err(err.message);
+    res.status(500).send(serverError);
+  }
+};
+
 module.exports = profileController;

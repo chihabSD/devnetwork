@@ -49,5 +49,11 @@ router.put(
   authenticate,
   profileController.addExperience
 );
+//Delete experience
+router.delete(
+  "/profile/experience/:exp_id",
+  authenticate,
+  profileController.deleteExperience
+);
 
 module.exports = router;
