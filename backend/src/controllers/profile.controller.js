@@ -144,6 +144,7 @@ profileController.getallProfiles = async (req, res) => {
  * @access  public
  */
 profileController.getprofileByID = async (req, res) => {
+  let message = "No such profile found";
   try {
     const profile = await Profile.findOne({
       user: req.params.user_id
@@ -151,7 +152,7 @@ profileController.getprofileByID = async (req, res) => {
     //check if there is a profile or the user requested
     if (!profile)
       return res.status(400).json({
-        msg: `No such profile found`
+        msg: message
       });
     res.json(profile);
   } catch (err) {
@@ -160,10 +161,33 @@ profileController.getprofileByID = async (req, res) => {
     if (err.kind == "ObjectId") {
       //take err object and check if property kind  === objectId
       return res.status(400).json({
-        msg: `No such profile found`
+        msg: message
       });
     }
     res.status(500).send({ msg: "Server side error" });
+  }
+};
+
+/**
+ * @route   GET api/profile
+ * @description Delete profiel, user & post
+ * @access  private
+ */
+profileController.deleteProfile = async (req, res) => {
+  try {
+    //@todo - remove users posts
+
+    /**
+     * since this is private we have access to user id
+     * so we map the user which is the object id to user.id
+     */
+    await Profile.findOneAndRemove({ user: req.user.id });
+    //remove user
+    await User.findOneAndRemove({ _id: req.user.id });
+    res.json({ msg: "User removed" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
   }
 };
 module.exports = profileController;

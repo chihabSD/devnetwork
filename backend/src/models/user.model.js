@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
 //get Schema from mongoose
 const { Schema } = mongoose;

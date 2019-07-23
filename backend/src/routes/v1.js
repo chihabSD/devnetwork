@@ -60,7 +60,11 @@ router.post(
   authenticate,
   profileController.createprofile
 );
+//get all profiles
 router.get("/profile", profileController.getallProfiles);
+//get profile by id
 router.get("/profile/user/:user_id", profileController.getprofileByID);
+//Delete profile and user
+router.delete("/profile", authenticate, profileController.deleteProfile);
 
 module.exports = router;
