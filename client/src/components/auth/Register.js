@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 const Register = () => {
   // our stat = formDat and the setFormadat is the function to update our state
   /**
@@ -18,13 +20,30 @@ const Register = () => {
   const { name, email, password, password2 } = formData;
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     //check if password match
     if (password !== password2) {
       console.log("Passwords do not match");
     } else {
-      console.log(formData);
+      console.log("SUCCESS");
+      //   const newUser = {
+      //     name,
+      //     email,
+      //     password
+      //   };
+      //   try {
+      //     const config = {
+      //       headers: {
+      //         "Content-Type": "Application/json"
+      //       }
+      //     };
+      //     const body = JSON.stringify(newUser);
+      //     const res = await axios.post("/api/register", body, config);
+      //     console.log(res.data);
+      //   } catch (err) {
+      //     console.error(err.response.data);
+      //   }
     }
   };
   return (
